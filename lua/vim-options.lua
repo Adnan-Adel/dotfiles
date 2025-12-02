@@ -31,3 +31,4 @@ vim.keymap.set("v", ">", ">gv", { noremap = true, silent = true })
 vim.opt.whichwrap:append("<,>,h,l")
 vim.o.whichwrap = "b,s,<,>,[,]"
 
+vim.opt.cursorcolumn = false
