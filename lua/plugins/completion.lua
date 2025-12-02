@@ -1,8 +1,8 @@
 return {
-  {
-    -- cmp-nvim-lsp
-    "hrsh7th/cmp-nvim-lsp",
-  },
+	{
+		-- cmp-nvim-lsp
+		"hrsh7th/cmp-nvim-lsp",
+	},
 	{
 		-- luasnip
 		"L3MON4D3/LuaSnip",
@@ -11,20 +11,20 @@ return {
 			"rafamadriz/friendly-snippets",
 		},
 	},
-  {
-    "hrsh7th/cmp-buffer",
-  },
+	{
+		"hrsh7th/cmp-buffer",
+	},
 	{
 		-- nvim-cmp
 		"hrsh7th/nvim-cmp",
 		config = function()
 			local cmp = require("cmp")
-      require("luasnip.loaders.from_vscode").lazy_load()
+			require("luasnip.loaders.from_vscode").lazy_load()
 			cmp.setup({
 				snippet = {
 					expand = function(args)
-            local luasnip = require("luasnip")
-            luasnip.lsp_expand(args.body)
+						local luasnip = require("luasnip")
+						luasnip.lsp_expand(args.body)
 					end,
 				},
 				window = {
@@ -36,15 +36,20 @@ return {
 					["<C-f>"] = cmp.mapping.scroll_docs(4),
 					["<C-Space>"] = cmp.mapping.complete(),
 					["<C-e>"] = cmp.mapping.abort(),
-					["<CR>"] = cmp.mapping.confirm({ select = true }),
+					["<CR>"] = cmp.mapping(function(fallback)
+						if cmp.visible() and cmp.get_active_entry() then
+							cmp.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false })
+						else
+							fallback() -- <CR> goes to next line
+						end
+					end),
 				}),
 				sources = cmp.config.sources({
 					{ name = "nvim_lsp" },
 					{ name = "luasnip" },
-					{ name = "buffer",},
+					{ name = "buffer" },
 				}),
 			})
-
 		end,
 	},
 }

@@ -9,6 +9,15 @@ return{
     "MunifTanjim/nui.nvim",
   },
   config=function ()
-    vim.keymap.set('n', '<C-n>', ':Neotree toggle left<CR>', { desc = "Toggle Neo-tree" })
+     require("neo-tree").setup({
+      filesystem = {
+        filtered_items = {
+          visible = true,
+          hide_dotfiles = false,
+          hide_gitignored = false,
+        },
+      },
+    })
+    vim.keymap.set('n', '<C-e>', ':Neotree toggle left<CR>', { desc = "Toggle Neo-tree" })
   end
 }

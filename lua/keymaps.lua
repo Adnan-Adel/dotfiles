@@ -45,3 +45,55 @@ end, { desc = "Toggle comment on current line" })
 map("v", "<leader>/", "<ESC><CMD>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<CR>", { desc = "Toggle comment on selection" })
 
 
+-- Toggle Hex in object files
+vim.keymap.set('n', '<leader>hx', ':HexToggle<CR>', { desc = 'Toggle hex view' })
+
+
+--      Diagnostics Keymaps
+-- Show diagnostics in a floating window
+vim.keymap.set("n", "gl", vim.diagnostic.open_float, { desc = "Show diagnostics under cursor" })
+
+-- Jump to previous/next diagnostic
+vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to previous diagnostic" })
+vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Go to next diagnostic" })
+
+-- Show diagnostics list in quickfix
+vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostics list" })
+
+-- ==============================
+--  LSP Navigation
+-- ==============================
+vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "Go to definition" })
+vim.keymap.set("n", "gD", vim.lsp.buf.declaration, { desc = "Go to declaration" })
+vim.keymap.set("n", "gi", vim.lsp.buf.implementation, { desc = "Go to implementation" })
+vim.keymap.set("n", "gr", vim.lsp.buf.references, { desc = "Find references" })
+vim.keymap.set("n", "<leader>D", vim.lsp.buf.type_definition, { desc = "Go to type definition" })
+
+-- ==============================
+--  LSP Info & Docs
+-- ==============================
+vim.keymap.set("n", "K", vim.lsp.buf.hover, { desc = "Show hover documentation" })
+vim.keymap.set("i", "<C-k>", vim.lsp.buf.signature_help, { desc = "Signature help" })
+
+-- ==============================
+--  Refactoring
+-- ==============================
+vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { desc = "Rename symbol" })
+vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "Code actions" })
+
+-- ==============================
+--  Formatting
+-- ==============================
+vim.keymap.set("n", "<leader>f", function()
+  vim.lsp.buf.format({ async = true })
+end, { desc = "Format document" })
+
+-- Duplicate current line
+vim.keymap.set("n", "<A-d>", "yyp", { desc = "Duplicate line below" })
+
+-- Move current line up/down
+map("n", "<A-j>", ":m .+1<CR>==", { desc = "Move line down" })
+map("n", "<A-k>", ":m .-2<CR>==", { desc = "Move line up" })
+map("v", "<A-j>", ":m '>+1<CR>gv=gv", { desc = "Move selection down" })
+map("v", "<A-k>", ":m '<-2<CR>gv=gv", { desc = "Move selection up" })
+
