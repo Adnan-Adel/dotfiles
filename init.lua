@@ -1,7 +1,9 @@
 ---@diagnostic disable: undefined-global
 
 vim.opt.clipboard = "unnamedplus"
-vim.opt.scrolloff = 25
+-- vim.opt.scrolloff = 25
+
+vim.o.cmdheight = 0
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
