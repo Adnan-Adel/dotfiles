@@ -4,8 +4,6 @@ vim.keymap.set("n", "<leader>cs", function()
   require("telescope.builtin").colorscheme({ enable_preview = true })
 end, { desc = "Choose Colorscheme" })
 
-
-
 -- Keymap to toggle line numbers
 vim.keymap.set("n", "<leader>n", ":set nu!<CR>", { silent = true, desc = "Toggle line numbers" })
 -- Keymap to toggle relative line numbers

@@ -2,6 +2,10 @@
 vim.opt.number = true        -- Enable absolute line numbers
 vim.opt.relativenumber = true -- Enable relative line numbers
 
+
+-- set a default color scheme
+vim.cmd("colorscheme gruvbox-material")
+
 -- enable a brief highlight when copying
 vim.api.nvim_create_autocmd('TextYankPost', {
   desc = 'Highlight when yanking (copying) text',

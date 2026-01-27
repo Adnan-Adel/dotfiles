@@ -40,13 +40,9 @@ return {
 				capabilities = capabilities,
 			})
 			lspconfig.omnisharp.setup({
-				cmd = {
-					vim.fn.stdpath("data") .. "/mason/packages/omnisharp/omnisharp",
-					"--languageserver",
-					"--hostPID",
-					tostring(vim.fn.getpid()),
-				},
+				cmd = { "omnisharp", "--languageserver", "--hostPID", tostring(vim.fn.getpid()) },
 				capabilities = capabilities,
+				root_dir = lspconfig.util.root_pattern("*.sln", "*.csproj", ".git"),
 			})
 
 			-- lspconfig.omnisharp.setup({
