@@ -1,23 +1,28 @@
 return {
-  "RaafatTurki/hex.nvim",
-  config = function()
-    require("hex").setup({
-      -- CLI command used to dump hex data
-      dump_cmd = 'xxd -g 1 -u',
+    "RaafatTurki/hex.nvim",
+    config = function()
+        require("hex").setup({
+            -- CLI command used to dump hex data
+            dump_cmd = 'xxd -g 1 -u',
 
-      -- CLI command used to assemble from hex data
-      assemble_cmd = 'xxd -r',
+            -- CLI command used to assemble from hex data
+            assemble_cmd = 'xxd -r',
 
-      -- OPTIONAL: custom binary detection (default is usually fine)
-      is_file_binary_pre_read = function()
-        -- your custom logic, must return true or false
-        return false
-      end,
+            -- OPTIONAL: custom binary detection (default is usually fine)
+            is_file_binary_pre_read = function()
+                -- your custom logic, must return true or false
+                return false
+            end,
 
-      is_file_binary_post_read = function()
-        -- your custom logic, must return true or false
-        return false
-      end,
-    })
-  end
+            is_file_binary_post_read = function()
+                -- your custom logic, must return true or false
+                return false
+            end,
+
+            -- Toggle hex mode
+            vim.keymap.set("n", "<leader>xh", "<cmd>HexToggle<CR>",
+                { desc = "Toggle hex view" })
+
+        })
+    end
 }

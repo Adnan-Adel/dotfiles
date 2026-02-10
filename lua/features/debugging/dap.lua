@@ -42,13 +42,13 @@ return {
       local map = vim.keymap.set
       local opts = { noremap = true, silent = true }
 
-      map("n", "<leader>db", dap.toggle_breakpoint, opts)
+      map("n", "<leader>tb", dap.toggle_breakpoint, opts)
       map("n", "<leader>dc", dap.continue, opts)
       map("n", "<leader>do", dap.step_over, opts)
       map("n", "<leader>di", dap.step_into, opts)
       map("n", "<leader>dO", dap.step_out, opts)
       map("n", "<leader>dr", dap.repl.open, opts)
-      map("n", "<leader>dq", dap.terminate, opts)
+      map("n", "<leader>tq", dap.terminate, opts)
     end,
   },
 
