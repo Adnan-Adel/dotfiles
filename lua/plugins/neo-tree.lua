@@ -13,7 +13,7 @@ return {
         { "<leader>be", "<cmd>Neotree buffers<cr>",    desc = "Buffer explorer" },
     },
     opts = {
-        close_if_last_window = true,
+        close_if_last_window = false,
         popup_border_style = "rounded",
         enable_git_status = true,
         enable_diagnostics = true,
@@ -81,6 +81,7 @@ return {
             },
             follow_current_file = {
                 enabled = true,
+                follow_current_file = true,
             },
             use_libuv_file_watcher = true,
         },

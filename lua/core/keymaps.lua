@@ -109,6 +109,50 @@ vim.keymap.set("n", "<leader>dq", "<cmd>DB<CR>",
     { desc = "Run DB query" })
 
 
+-- Quick compile/run
+keymap("n", "<F5>", function()
+  -- Save all files first
+  vim.cmd("wall")
+  
+  -- Detect project type and run appropriate command
+  if vim.fn.filereadable("Makefile") == 1 then
+    vim.cmd("!make")
+  elseif vim.fn.filereadable("Cargo.toml") == 1 then
+    vim.cmd("!cargo build")
+  elseif vim.fn.filereadable("package.json") == 1 then
+    vim.cmd("!npm run build")
+  elseif vim.fn.filereadable("go.mod") == 1 then
+    vim.cmd("!go build")
+  else
+    vim.notify("No build system detected", vim.log.levels.WARN)
+  end
+end, { desc = "Build project" })
+
+-- Quick run
+keymap("n", "<F6>", function()
+  local ft = vim.bo.filetype
+  if ft == "python" then
+    vim.cmd("!python3 %")
+  elseif ft == "javascript" or ft == "typescript" then
+    vim.cmd("!node %")
+  elseif ft == "c" or ft == "cpp" then
+    vim.cmd("!./%:r")
+  elseif ft == "rust" then
+    vim.cmd("!cargo run")
+  elseif ft == "go" then
+    vim.cmd("!go run %")
+  end
+end, { desc = "Run current file" })
+
+
+-- Emacs-style window management
+keymap("n", "<C-x>2", ":split<CR>", { desc = "Split horizontal" })
+keymap("n", "<C-x>3", ":vsplit<CR>", { desc = "Split vertical" })
+keymap("n", "<C-x>0", ":close<CR>", { desc = "Close window" })
+keymap("n", "<C-x>1", ":only<CR>", { desc = "Close other windows" })
+keymap("n", "<C-x>o", "<C-w>w", { desc = "Next window" })
+
+
 
 
 -- ╔═══════════════════════════════════════════════════╗
