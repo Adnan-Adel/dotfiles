@@ -22,9 +22,6 @@ require("core.autocmds")
 -- setup plugins
 require("lazy").setup({
     { import = "plugins" },
-    { import = "ui" },
-    { import = "features.completion" },
-    { import = "features.debugging" },
-    { import = "features.formatting" },
-    { import = "features.search" },
+    { import = "plugins.completion" },
+    { import = "plugins.ui" },
 })
