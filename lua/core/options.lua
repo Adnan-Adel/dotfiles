@@ -34,7 +34,6 @@ vim.opt.whichwrap:append("<,>,h,l,[,]")
 vim.opt.hlsearch = true
 vim.opt.incsearch = true
 vim.opt.ignorecase = false
-vim.opt.smartcase = true
 
 -- Split windows
 vim.opt.splitbelow = true

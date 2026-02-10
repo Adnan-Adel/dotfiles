@@ -27,6 +27,13 @@ keymap("n", "<C-Right>", ":vertical resize +2<CR>", { desc = "Increase width" })
 -- Window Splitting
 keymap("n", "<leader>vs", ":vsplit<CR>", { desc = "Vertical split" })
 keymap("n", "<leader>hs", ":split<CR>", { desc = "Horizontal split" })
+-- Emacs-style window management
+keymap("n", "<C-x>2", ":split<CR>", { desc = "Split horizontal" })
+keymap("n", "<C-x>3", ":vsplit<CR>", { desc = "Split vertical" })
+keymap("n", "<C-x>0", ":close<CR>", { desc = "Close window" })
+keymap("n", "<C-x>1", ":only<CR>", { desc = "Close other windows" })
+keymap("n", "<C-x>o", "<C-w>w", { desc = "Next window" })
+
 
 -- Move text up and down in visual mode
 keymap("v", "J", ":m '>+1<CR>gv=gv", { desc = "Move line down" })
@@ -87,9 +94,6 @@ keymap("v", "<leader>d", "y`>p", { desc = "Duplicate selection" })
 keymap({ "n", "v" }, "<leader>x", '"_d', { desc = "Delete without yanking" })
 keymap("n", "<leader>X", '"_dd', { desc = "Delete line without yanking" })
 
--- Change without yanking
-keymap({ "n", "v" }, "<leader>c", '"_c', { desc = "Change without yanking" })
-
 -- select last pasted/changed text
 keymap("n", "gp", "`[v`]", { desc = "Select last paste" })
 
@@ -109,84 +113,90 @@ vim.keymap.set("n", "<leader>dq", "<cmd>DB<CR>",
     { desc = "Run DB query" })
 
 
--- Quick compile/run
-keymap("n", "<F5>", function()
-  -- Save all files first
-  vim.cmd("wall")
-  
-  -- Detect project type and run appropriate command
-  if vim.fn.filereadable("Makefile") == 1 then
-    vim.cmd("!make")
-  elseif vim.fn.filereadable("Cargo.toml") == 1 then
-    vim.cmd("!cargo build")
-  elseif vim.fn.filereadable("package.json") == 1 then
-    vim.cmd("!npm run build")
-  elseif vim.fn.filereadable("go.mod") == 1 then
-    vim.cmd("!go build")
-  else
-    vim.notify("No build system detected", vim.log.levels.WARN)
-  end
-end, { desc = "Build project" })
-
--- Quick run
-keymap("n", "<F6>", function()
-  local ft = vim.bo.filetype
-  if ft == "python" then
-    vim.cmd("!python3 %")
-  elseif ft == "javascript" or ft == "typescript" then
-    vim.cmd("!node %")
-  elseif ft == "c" or ft == "cpp" then
-    vim.cmd("!./%:r")
-  elseif ft == "rust" then
-    vim.cmd("!cargo run")
-  elseif ft == "go" then
-    vim.cmd("!go run %")
-  end
-end, { desc = "Run current file" })
-
-
--- Emacs-style window management
-keymap("n", "<C-x>2", ":split<CR>", { desc = "Split horizontal" })
-keymap("n", "<C-x>3", ":vsplit<CR>", { desc = "Split vertical" })
-keymap("n", "<C-x>0", ":close<CR>", { desc = "Close window" })
-keymap("n", "<C-x>1", ":only<CR>", { desc = "Close other windows" })
-keymap("n", "<C-x>o", "<C-w>w", { desc = "Next window" })
-
-
 
 
 -- ╔═══════════════════════════════════════════════════╗
--- ║              NEOVIM CHEATSHEET                    ║
+-- ║           Keymaps CHEATSHEET                      ║
+-- ╠═══════════════════════════════════════════════════╣
+-- ║ NAVIGATION                                        ║
+-- ║ <C-h/j/k/l>    Navigate windows                   ║
+-- ║ <C-e>          Toggle Neo-tree                    ║
+-- ║ -              Open Oil (file manager)            ║
+-- ║ ]b / [b        Next/Previous buffer               ║
 -- ╠═══════════════════════════════════════════════════╣
 -- ║ SELECTION                                         ║
--- ║ <C-a>        Select all                           ║
--- ║ <leader>v    Select word                          ║
--- ║ viw/vaw      Visual word                          ║
--- ║ vi"/va"      Visual quotes                        ║
+-- ║ <C-;>          Select all                         ║
+-- ║ <leader>v      Select word                        ║
+-- ║ viw / vaw      Visual word                        ║
+-- ║ vi" / va"      Visual quotes                      ║
+-- ║ gp             Select last paste                  ║
 -- ╠═══════════════════════════════════════════════════╣
 -- ║ EDITING                                           ║
--- ║ <leader>d    Duplicate                            ║
--- ║ <leader>x    Delete (no yank)                     ║
--- ║ <leader>p    Paste (no yank)                      ║
--- ║ J/K (vis)    Move lines                           ║
+-- ║ <leader>d      Duplicate line/selection           ║
+-- ║ <leader>x      Delete (no yank)                   ║
+-- ║ <leader>p      Paste (no yank)                    ║
+-- ║ J/K (visual)   Move lines up/down                 ║
+-- ║ < / >          Indent left/right                  ║
 -- ╠═══════════════════════════════════════════════════╣
 -- ║ SEARCH & REPLACE                                  ║
--- ║ <leader>sr   Replace word/selection               ║
--- ║ //  (vis)    Search selection                     ║
--- ║ <Esc>        Clear highlight                      ║
+-- ║ <leader>sr     Replace word/selection             ║
+-- ║ <leader>S      Spectre (GUI replace)              ║
+-- ║ //  (visual)   Search selection                   ║
+-- ║ <Esc>          Clear search highlight             ║
 -- ╠═══════════════════════════════════════════════════╣
--- ║ LSP                                               ║
--- ║ gl           Show error                           ║
--- ║ [d / ]d      Prev/next error                      ║
--- ║ <leader>rn   Rename                               ║
--- ║ gd           Go to definition                     ║
+-- ║ LSP & DIAGNOSTICS                                 ║
+-- ║ gd             Go to definition                   ║
+-- ║ gr             Show references                    ║
+-- ║ K              Hover documentation                ║
+-- ║ <leader>rn     Rename symbol                      ║
+-- ║ <leader>ca     Code actions                       ║
+-- ║ gl             Show diagnostic                    ║
+-- ║ [d / ]d        Previous/Next diagnostic           ║
+-- ║ <leader>dl     Diagnostics to location list       ║
+-- ╠═══════════════════════════════════════════════════╣
+-- ║ TELESCOPE (FIND)                                  ║
+-- ║ <leader>ff     Find files                         ║
+-- ║ <leader>fg     Live grep                          ║
+-- ║ <leader>fb     Find buffers                       ║
+-- ║ <leader>fh     Find help                          ║
+-- ║ <leader>ft     Find TODOs                         ║
+-- ║ <leader>fp     Find projects                      ║
+-- ║ <C-p>          Git files                          ║
+-- ╠═══════════════════════════════════════════════════╣
+-- ║ BUFFERS                                           ║
+-- ║ <leader>w      Save file                          ║
+-- ║ <leader>bd     Close buffer                       ║
+-- ║ <leader>br     Reload buffer                      ║
+-- ║ ]b / [b        Next/Previous buffer               ║
 -- ╠═══════════════════════════════════════════════════╣
 -- ║ WINDOWS                                           ║
--- ║ <C-h/j/k/l>  Navigate                             ║
--- ║ <leader>vs   Vertical split                       ║
--- ║ <C-Up/Down>  Resize                               ║ 
+-- ║ <leader>vs     Vertical split                     ║
+-- ║ <leader>hs     Horizontal split                   ║
+-- ║ <leader>wc     Close window                       ║
+-- ║ <C-Up/Down>    Resize height                      ║
+-- ║ <C-Left/Right> Resize width                       ║
+-- ╠═══════════════════════════════════════════════════╣
+-- ║ TERMINALS                                         ║
+-- ║ <C-\>          Toggle floating terminal           ║
+-- ║ <leader>th     Horizontal terminal                ║
+-- ║ <leader>tv     Vertical terminal                  ║
+-- ║ <leader>t1-4   Toggle terminal 1-4                ║
+-- ╠═══════════════════════════════════════════════════╣
+-- ║ GIT                                               ║
+-- ║ <leader>gs     Git status (Fugitive)              ║
+-- ║ <leader>gg     Neogit                             ║
+-- ║ ]h / [h        Next/Previous git hunk             ║
+-- ║ <leader>hp     Preview hunk                       ║
+-- ║ <leader>hs     Stage hunk                         ║
 -- ╠═══════════════════════════════════════════════════╣
 -- ║ QUICKFIX                                          ║
--- ║ ]q / [q      Next/prev item                       ║
--- ║ <leader>qo   Open quickfix                        ║
+-- ║ ]q / [q        Next/Previous quickfix             ║
+-- ║ <leader>qo     Open quickfix                      ║
+-- ║ <leader>qc     Close quickfix                     ║
+-- ╠═══════════════════════════════════════════════════╣
+-- ║ MISC                                              ║
+-- ║ <leader>u      Undotree                           ║
+-- ║ <leader>e      Harpoon menu                       ║
+-- ║ <C-n>          Multi-cursor (next occurrence)     ║
+-- ║ <leader>z      Toggle fold                        ║
 -- ╚═══════════════════════════════════════════════════╝
