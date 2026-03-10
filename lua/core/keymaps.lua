@@ -149,6 +149,12 @@ keymap("n", "<leader>qf", function()
     end, 100)
 end, { desc = "Quick fix next error" })
 
+-- change shift + arrows functionality
+keymap("n", "<S-Right>", "e", { desc = "End of word" })
+keymap("n", "<S-Left>", "b", { desc = "Beginning of word" })
+keymap("i", "<S-Right>", "<C-o>e<C-o>a", { desc = "End of word" })
+keymap("i", "<S-Left>", "<C-o>b", { desc = "Beginning of word" })
+
 
 
 -- ╔═══════════════════════════════════════════════════╗
