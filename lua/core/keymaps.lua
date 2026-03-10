@@ -50,7 +50,7 @@ keymap("n", "N", "Nzzzv", { desc = "Previous search result centered" })
 
 -- Quick save and quit
 keymap("n", "<leader>w", ":w<CR>", { desc = "Save file" })
-keymap("n", "<leader>Q", ":q<CR>", { desc = "Quit" })  -- Changed from <leader>q to <leader>Q
+keymap("n", "<leader>Q", ":q<CR>", { desc = "Quit" }) -- Changed from <leader>q to <leader>Q
 
 -- Better indenting
 keymap("v", "<", "<gv", { desc = "Indent left" })
@@ -76,10 +76,11 @@ keymap("n", "<leader>q", vim.diagnostic.setloclist, { desc = "LSP: Open diagnost
 
 
 -- Quick select all
-keymap("n", "<C-;>", "ggVG", { desc = "Select all"})
+keymap("n", "<C-;>", "ggVG", { desc = "Select all" })
 
 -- Better search and replace
-keymap("n", "<leader>sr", ":%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<Left><Left><Left>", { desc = "Search and replace word under cursor" })
+keymap("n", "<leader>sr", ":%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<Left><Left><Left>",
+    { desc = "Search and replace word under cursor" })
 keymap("v", "<leader>sr", '"hy:%s/<C-r>h/<C-r>h/gc<left><left><left>', { desc = "Search and replace selection" })
 
 -- Quick select inside/around
@@ -112,6 +113,41 @@ vim.keymap.set("n", "<leader>db", "<cmd>DBUIToggle<CR>",
 vim.keymap.set("n", "<leader>dq", "<cmd>DB<CR>",
     { desc = "Run DB query" })
 
+
+vim.keymap.set("n", "<leader>r", function()
+    if next(vim.lsp.get_active_clients()) == nil then
+        vim.notify("No LSP clients running", vim.log.levels.WARN)
+        return
+    end
+
+    vim.cmd("LspRestart")
+    vim.notify("LSP restarted", vim.log.levels.INFO)
+end, { desc = "Restart LSP / reload project" })
+
+
+-- format:
+vim.keymap.set("n", "<C-Enter>", vim.lsp.buf.format, {})
+
+
+
+
+-- Open PDF in external viewer
+keymap("n", "<leader>op", function()
+    local file = vim.fn.expand("%:p")
+    if vim.fn.has("mac") == 1 then
+        vim.cmd("!open " .. file)
+    else
+        vim.cmd("!zathura " .. file .. " &") -- or xdg-open, evince, okular
+    end
+end, { desc = "Open PDF externally" })
+
+-- Quick fix (jump to error and show code actions)
+keymap("n", "<leader>qf", function()
+    vim.diagnostic.goto_next()
+    vim.defer_fn(function()
+        vim.lsp.buf.code_action()
+    end, 100)
+end, { desc = "Quick fix next error" })
 
 
 

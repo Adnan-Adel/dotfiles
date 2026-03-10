@@ -35,7 +35,7 @@ return {
             vim.g.gruvbox_material_background = "hard" -- soft | medium | hard
             vim.g.gruvbox_material_foreground = "material"
             -- set a default color scheme
-            -- vim.cmd("colorscheme gruvbox-material")
+            vim.cmd("colorscheme gruvbox-material")
             -- vim.cmd("colorscheme default")
         end,
     },
@@ -58,7 +58,7 @@ return {
                 },
             })
 
-            vim.cmd("colorscheme github_dark_dimmed")
+            -- vim.cmd("colorscheme github_dark_dimmed")
         end,
     },
 

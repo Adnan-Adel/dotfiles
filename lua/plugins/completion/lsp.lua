@@ -24,7 +24,12 @@ return {
             require("mason-lspconfig").setup({
                 ensure_installed = {
                     "lua_ls",
+                    "clangd",
                     "ts_ls",
+                    "eslint",
+                    "tailwindcss",
+                    "html",
+                    "cssls",
                     "gopls",
                     "rust_analyzer",
                     "pyright",
@@ -97,18 +102,18 @@ return {
                 on_attach = on_attach,
             }
 
-            -- Simple servers (use defaults)
-            local simple_servers = {
-                "lua_ls",
-                "ts_ls",
-                "gopls",
-                "rust_analyzer",
-                "pyright",
-            }
-
-            for _, server in ipairs(simple_servers) do
-                lspconfig[server].setup(default_config)
-            end
+            -- -- Simple servers (use defaults)
+            -- local simple_servers = {
+            --     "lua_ls",
+            --     "ts_ls",
+            --     "gopls",
+            --     "rust_analyzer",
+            --     "pyright",
+            -- }
+            --
+            -- for _, server in ipairs(simple_servers) do
+            --     lspconfig[server].setup(default_config)
+            -- end
         end,
     },
 }
