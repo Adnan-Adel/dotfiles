@@ -154,7 +154,8 @@ keymap("n", "<S-Right>", "e", { desc = "End of word" })
 keymap("n", "<S-Left>", "b", { desc = "Beginning of word" })
 keymap("i", "<S-Right>", "<C-o>e<C-o>a", { desc = "End of word" })
 keymap("i", "<S-Left>", "<C-o>b", { desc = "Beginning of word" })
-
+keymap("i", "<C-Right>", "<C-o>e<C-o>a", { desc = "End of word" })
+keymap("i", "<C-Left>", "<C-o>b", { desc = "Beginning of word" })
 
 
 -- ╔═══════════════════════════════════════════════════╗

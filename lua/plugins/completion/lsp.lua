@@ -55,6 +55,11 @@ return {
             local capabilities = cmp_nvim_lsp.default_capabilities()
 
             local on_attach = function(client, bufnr)
+                -- Disable clangd format-on-type / auto formatting
+                if client.name == "clangd" then
+                    client.server_capabilities.documentFormattingProvider = false
+                end
+
                 local opts = { buffer = bufnr, silent = true }
 
                 -- Keybindings

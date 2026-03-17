@@ -50,5 +50,9 @@ return {
 
         vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
         vim.keymap.set("n", "<leader>-", require("oil").toggle_float, { desc = "Open Oil in float" })
+
+        -- Quick Oil shortcuts
+        vim.keymap.set("n", "<leader>oh", ":Oil ~<CR>", { desc = "Oil: home" })
+        vim.keymap.set("n", "<leader>on", ":Oil ~/.config/nvim<CR>", { desc = "Oil: config/nvim" })
     end,
 }
