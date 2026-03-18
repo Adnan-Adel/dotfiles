@@ -45,8 +45,6 @@ keymap("x", "<leader>p", [["_dP]], { desc = "Paste without yanking" })
 -- Keep cursor centered when scrolling
 keymap("n", "<C-d>", "<C-d>zz", { desc = "Scroll down and center" })
 keymap("n", "<C-u>", "<C-u>zz", { desc = "Scroll up and center" })
-keymap("n", "n", "nzzzv", { desc = "Next search result centered" })
-keymap("n", "N", "Nzzzv", { desc = "Previous search result centered" })
 
 -- Quick save and quit
 keymap("n", "<leader>w", ":w<CR>", { desc = "Save file" })
@@ -102,10 +100,6 @@ keymap("n", "gp", "`[v`]", { desc = "Select last paste" })
 keymap("v", "//", 'y/\\V<C-R>=escape(@",\'/\\\')<CR><CR>', { desc = "Search selection" })
 
 
--- reload nvim
-
-
-
 -- Database UI
 vim.keymap.set("n", "<leader>db", "<cmd>DBUIToggle<CR>",
     { desc = "Toggle DB UI" })
@@ -114,6 +108,7 @@ vim.keymap.set("n", "<leader>dq", "<cmd>DB<CR>",
     { desc = "Run DB query" })
 
 
+-- LSP restart
 vim.keymap.set("n", "<leader>r", function()
     if next(vim.lsp.get_active_clients()) == nil then
         vim.notify("No LSP clients running", vim.log.levels.WARN)
@@ -137,7 +132,7 @@ keymap("n", "<leader>op", function()
     if vim.fn.has("mac") == 1 then
         vim.cmd("!open " .. file)
     else
-        vim.cmd("!zathura " .. file .. " &") -- or xdg-open, evince, okular
+        vim.cmd("!zathura " .. file .. " &")
     end
 end, { desc = "Open PDF externally" })
 
@@ -158,88 +153,16 @@ keymap("i", "<C-Right>", "<C-o>e<C-o>a", { desc = "End of word" })
 keymap("i", "<C-Left>", "<C-o>b", { desc = "Beginning of word" })
 
 
--- ╔═══════════════════════════════════════════════════╗
--- ║           Keymaps CHEATSHEET                      ║
--- ╠═══════════════════════════════════════════════════╣
--- ║ NAVIGATION                                        ║
--- ║ <C-h/j/k/l>    Navigate windows                   ║
--- ║ <C-e>          Toggle Neo-tree                    ║
--- ║ -              Open Oil (file manager)            ║
--- ║ ]b / [b        Next/Previous buffer               ║
--- ╠═══════════════════════════════════════════════════╣
--- ║ SELECTION                                         ║
--- ║ <C-;>          Select all                         ║
--- ║ <leader>v      Select word                        ║
--- ║ viw / vaw      Visual word                        ║
--- ║ vi" / va"      Visual quotes                      ║
--- ║ gp             Select last paste                  ║
--- ╠═══════════════════════════════════════════════════╣
--- ║ EDITING                                           ║
--- ║ <leader>d      Duplicate line/selection           ║
--- ║ <leader>x      Delete (no yank)                   ║
--- ║ <leader>p      Paste (no yank)                    ║
--- ║ J/K (visual)   Move lines up/down                 ║
--- ║ < / >          Indent left/right                  ║
--- ╠═══════════════════════════════════════════════════╣
--- ║ SEARCH & REPLACE                                  ║
--- ║ <leader>sr     Replace word/selection             ║
--- ║ <leader>S      Spectre (GUI replace)              ║
--- ║ //  (visual)   Search selection                   ║
--- ║ <Esc>          Clear search highlight             ║
--- ╠═══════════════════════════════════════════════════╣
--- ║ LSP & DIAGNOSTICS                                 ║
--- ║ gd             Go to definition                   ║
--- ║ gr             Show references                    ║
--- ║ K              Hover documentation                ║
--- ║ <leader>rn     Rename symbol                      ║
--- ║ <leader>ca     Code actions                       ║
--- ║ gl             Show diagnostic                    ║
--- ║ [d / ]d        Previous/Next diagnostic           ║
--- ║ <leader>dl     Diagnostics to location list       ║
--- ╠═══════════════════════════════════════════════════╣
--- ║ TELESCOPE (FIND)                                  ║
--- ║ <leader>ff     Find files                         ║
--- ║ <leader>fg     Live grep                          ║
--- ║ <leader>fb     Find buffers                       ║
--- ║ <leader>fh     Find help                          ║
--- ║ <leader>ft     Find TODOs                         ║
--- ║ <leader>fp     Find projects                      ║
--- ║ <C-p>          Git files                          ║
--- ╠═══════════════════════════════════════════════════╣
--- ║ BUFFERS                                           ║
--- ║ <leader>w      Save file                          ║
--- ║ <leader>bd     Close buffer                       ║
--- ║ <leader>br     Reload buffer                      ║
--- ║ ]b / [b        Next/Previous buffer               ║
--- ╠═══════════════════════════════════════════════════╣
--- ║ WINDOWS                                           ║
--- ║ <leader>vs     Vertical split                     ║
--- ║ <leader>hs     Horizontal split                   ║
--- ║ <leader>wc     Close window                       ║
--- ║ <C-Up/Down>    Resize height                      ║
--- ║ <C-Left/Right> Resize width                       ║
--- ╠═══════════════════════════════════════════════════╣
--- ║ TERMINALS                                         ║
--- ║ <C-\>          Toggle floating terminal           ║
--- ║ <leader>th     Horizontal terminal                ║
--- ║ <leader>tv     Vertical terminal                  ║
--- ║ <leader>t1-4   Toggle terminal 1-4                ║
--- ╠═══════════════════════════════════════════════════╣
--- ║ GIT                                               ║
--- ║ <leader>gs     Git status (Fugitive)              ║
--- ║ <leader>gg     Neogit                             ║
--- ║ ]h / [h        Next/Previous git hunk             ║
--- ║ <leader>hp     Preview hunk                       ║
--- ║ <leader>hs     Stage hunk                         ║
--- ╠═══════════════════════════════════════════════════╣
--- ║ QUICKFIX                                          ║
--- ║ ]q / [q        Next/Previous quickfix             ║
--- ║ <leader>qo     Open quickfix                      ║
--- ║ <leader>qc     Close quickfix                     ║
--- ╠═══════════════════════════════════════════════════╣
--- ║ MISC                                              ║
--- ║ <leader>u      Undotree                           ║
--- ║ <leader>e      Harpoon menu                       ║
--- ║ <C-n>          Multi-cursor (next occurrence)     ║
--- ║ <leader>z      Toggle fold                        ║
--- ╚═══════════════════════════════════════════════════╝
+-- cd prompt:
+vim.keymap.set("n", "<leader>cd", function()
+    vim.ui.input({ prompt = "cd: ", default = "~/", completion = "dir" }, function(input)
+        if not input or input == "" then return end
+        local dir = vim.fn.expand(input)
+        if vim.fn.isdirectory(dir) == 0 then
+            vim.notify("Not a directory: " .. dir, vim.log.levels.ERROR)
+            return
+        end
+        vim.cmd("cd " .. vim.fn.fnameescape(dir))
+        vim.notify("cwd → " .. dir, vim.log.levels.INFO)
+    end)
+end, { desc = "cd to directory" })

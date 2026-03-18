@@ -3,7 +3,7 @@ return {
     version = "*",
     config = function()
         require("toggleterm").setup({
-            open_mapping = nil, -- We handle mappings ourselves
+            open_mapping = nil,
             hide_numbers = true,
             shade_terminals = true,
             shading_factor = 2,
@@ -56,6 +56,7 @@ return {
         function _G._HORIZONTAL_TERM_TOGGLE()
             horizontal_term:toggle()
         end
+
         -- Vertical terminal (toggleable)
         local vertical_term = Terminal:new({ direction = "vertical", hidden = true })
         function _G._VERTICAL_TERM_TOGGLE()
@@ -63,14 +64,21 @@ return {
         end
 
         function _G._TERM_LIST()
-            local msg = "Open terminals:\n"
-            for i, term in pairs(terminals) do
-                if term:is_open() then
-                    msg = msg .. "  " .. i .. " → running\n"
+            local terms = {
+                { name = "float",      term = float_term },
+                { name = "horizontal", term = horizontal_term },
+                { name = "vertical",   term = vertical_term },
+            }
+            local msg = "Terminals:\n"
+            local any = false
+            for _, t in ipairs(terms) do
+                if t.term:is_open() then
+                    msg = msg .. "  " .. t.name .. " → open\n"
+                    any = true
                 end
             end
-            if msg == "Open terminals:\n" then
-                msg = msg .. "  none"
+            if not any then
+                msg = msg .. "  none open"
             end
             vim.notify(msg, vim.log.levels.INFO)
         end
@@ -80,14 +88,15 @@ return {
         -- ===========================
 
         -- Floating terminal
-            vim.keymap.set("n", "<C-'>", "<cmd>lua _FLOAT_TERM_TOGGLE()<CR>", { desc = "Toggle floating terminal" })
+        vim.keymap.set("n", "<C-'>", "<cmd>lua _FLOAT_TERM_TOGGLE()<CR>", { desc = "Toggle floating terminal" })
 
         -- Open NEW terminals (your original behavior)
         vim.keymap.set("n", "<leader>tH", ":botright split | terminal<CR>", { desc = "New horizontal terminal" })
         vim.keymap.set("n", "<leader>tV", ":botright vsplit | terminal<CR>", { desc = "New vertical terminal" })
 
 
-        vim.keymap.set("n", "<leader>th", "<cmd>lua _HORIZONTAL_TERM_TOGGLE()<CR>", { desc = "Toggle horizontal terminal" })
+        vim.keymap.set("n", "<leader>th", "<cmd>lua _HORIZONTAL_TERM_TOGGLE()<CR>",
+            { desc = "Toggle horizontal terminal" })
         vim.keymap.set("n", "<leader>tv", "<cmd>lua _VERTICAL_TERM_TOGGLE()<CR>", { desc = "Toggle vertical terminal" })
         vim.keymap.set("n", "<C-`>", "<cmd>lua _HORIZONTAL_TERM_TOGGLE()<CR>", { desc = "Toggle horizontal terminal" })
 

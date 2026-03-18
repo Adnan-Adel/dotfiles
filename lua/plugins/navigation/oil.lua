@@ -34,18 +34,6 @@ return {
             view_options = {
                 show_hidden = true,
             },
-
-            vim.api.nvim_create_autocmd("FileType", {
-                pattern = "oil",
-                callback = function(ev)
-                    local opts = { buffer = ev.buf, silent = true }
-
-                    vim.keymap.set("n", "<C-h>", "<C-w>h", opts)
-                    vim.keymap.set("n", "<C-j>", "<C-w>j", opts)
-                    vim.keymap.set("n", "<C-k>", "<C-w>k", opts)
-                    vim.keymap.set("n", "<C-l>", "<C-w>l", opts)
-                end,
-            })
         })
 
         vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
