@@ -20,8 +20,12 @@ vim.opt.shiftwidth = 4
 
 -- Behavior
 vim.opt.clipboard = "unnamedplus"
+
+-- undo
 vim.opt.undofile = true
-vim.opt.undodir = vim.fn.stdpath("config") .. "/undo"
+vim.opt.undodir = vim.fn.stdpath("data") .. "/undo"
+vim.fn.mkdir(vim.opt.undodir:get()[1], "p")
+
 vim.opt.swapfile = false
 vim.opt.backup = false
 vim.opt.writebackup = false
